@@ -22,7 +22,7 @@ function queueRouter(command, args, pinger, message) {
 
 	msg = "";
 
-	if ( command === '-join' || command === '-in' ) {
+	if ( command === '-join' || command === 'ue-join' ) {
 
 		//If someone was tagged, add them. If noone was tagged, add the person that sent the message
 		if (!args.length) {
@@ -47,7 +47,7 @@ function queueRouter(command, args, pinger, message) {
 
 
 
-	else if ( command === '-out' || command === '-remove') {
+	else if ( command === '-out' || command === '-remove' || command === 'ue-out' || command === 'ue-remove' ) {
 		if (!args.length) {
 			tag = pinger;
 		}
@@ -68,14 +68,14 @@ function queueRouter(command, args, pinger, message) {
 
 
 
-	else if (command === '-reset') {
+	else if (command === '-reset' || command === 'ue-reset') {
 		queue = [];
 		msg = "Queue is now empty!";
 	}
 
 
 
-	else if (command === '-show') {
+	else if (command === '-show' || command === 'ue-show' ) {
 		if (queue.length < 1) {
 			msg = "No one in the queue!";
 		}
@@ -84,7 +84,7 @@ function queueRouter(command, args, pinger, message) {
 		}
 	}
 
-	else if (command === '-help') {
+	else if (command === '-help' || command === 'ue-help' ) {
 		msg = msg + "Queue Bot Commands:"+"\n";
 		msg = msg + "!que-join or !que-join @user to add a user to the queue"+"\n";
 		msg = msg + "!que-out or !que-out @user to remove a user from the queue"+"\n";
@@ -96,6 +96,25 @@ function queueRouter(command, args, pinger, message) {
 	else {
 		msg = "Can't recognize command. Please use !que-help for list of commands";
 	}
+
+	// else if ( command === '-up' || command === 'ue-up' ) {
+	// 	if (!args.length) {
+	// 		tag = pinger;
+	// 	}
+	// 	else {
+	// 		tag = message.mentions.users.first().tag;
+	// 	}
+
+	//   	removeA(queue, tag);
+	//   	msg = "User " + tag + " has been moved up a spot!";
+
+	//   	if (queue.length < 1) {
+	// 		msg = msg + " Queue is now empty.";
+	// 	}
+	// 	else {
+	// 		msg = msg + "\n" + "Queue:" + "\n" + queue.join('\n');
+	// 	}	  	
+	// }
 
 
 	return msg;
