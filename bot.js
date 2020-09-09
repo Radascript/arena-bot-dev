@@ -97,24 +97,43 @@ function queueRouter(command, args, pinger, message) {
 		msg = "Can't recognize command. Please use !que-help for list of commands";
 	}
 
-	// else if ( command === '-up' || command === 'ue-up' ) {
-	// 	if (!args.length) {
-	// 		tag = pinger;
-	// 	}
-	// 	else {
-	// 		tag = message.mentions.users.first().tag;
-	// 	}
+	else if ( command === '-up' || command === 'ue-up' || command === 'down' || command === 'ue-down' ) {
+		if (!args.length) {
+			tag = pinger;
+		}
+		else {
+			tag = message.mentions.users.first().tag;
+		}
 
-	//   	removeA(queue, tag);
-	//   	msg = "User " + tag + " has been moved up a spot!";
+		if (!queue.includes(tag)) {
+			msg = "User " + tag + " is not in the Queue.";
+			msg = msg + "\n" + "Queue:" + "\n" + queue.join('\n');
+		}
 
-	//   	if (queue.length < 1) {
-	// 		msg = msg + " Queue is now empty.";
-	// 	}
-	// 	else {
-	// 		msg = msg + "\n" + "Queue:" + "\n" + queue.join('\n');
-	// 	}	  	
-	// }
+		else {
+			var old_index = queue.indexOf(tag);
+			if ( command === '-up' || command === 'ue-up' ) {
+				var new_index = queue.indexOf(tag)-1;
+				var direction = "up";
+			}
+			else {
+				var new_index = queue.indexOf(tag)+1;
+				var direction = "down";
+			}
+
+			if (new_index < 0 || new_index > queue.length - 1) {
+				msg = "User " + tag + " cannot be moved " + direction;
+				msg = msg + "\n" + "Queue:" + "\n" + queue.join('\n');
+			}
+			else {
+				move(queue, old_index, new_index);
+				msg = "User " + tag + " has been moved " + direction;
+				msg = msg + "\n" + "Queue:" + "\n" + queue.join('\n');
+			}
+
+		}
+	
+	}
 
 
 	return msg;
@@ -129,6 +148,23 @@ function removeA(arr) {
         }
     }
     return arr;
+}
+
+function move(arr, old_index, new_index) {
+    while (old_index < 0) {
+        old_index += arr.length;
+    }
+    while (new_index < 0) {
+        new_index += arr.length;
+    }
+    if (new_index >= arr.length) {
+        var k = new_index - arr.length;
+        while ((k--) + 1) {
+            arr.push(undefined);
+        }
+    }
+     arr.splice(new_index, 0, arr.splice(old_index, 1)[0]);  
+   return arr;
 }
 
 // THIS  MUST  BE  THIS  WAY
