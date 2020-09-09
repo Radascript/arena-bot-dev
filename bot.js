@@ -93,7 +93,7 @@ function queueRouter(command, args, pinger, message) {
 		msg = msg + "!que-help to show commands";
 	}
 
-	else if ( command === '-up' || command === 'ue-up' || command === 'down' || command === 'ue-down' ) {
+	else if ( command === '-up' || command === 'ue-up' || command === '-down' || command === 'ue-down' ) {
 		if (!args.length) {
 			tag = pinger;
 		}
@@ -103,7 +103,12 @@ function queueRouter(command, args, pinger, message) {
 
 		if (!queue.includes(tag)) {
 			msg = "User " + tag + " is not in the Queue.";
-			msg = msg + "\n" + "Queue:" + "\n" + queue.join('\n');
+			if (queue.length < 1) {
+				msg = msg + " The queue is empty.";
+			}
+			else {
+				msg = msg + "\n" + "Queue:" + "\n" + queue.join('\n');
+			}
 		}
 
 		else {
