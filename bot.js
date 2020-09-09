@@ -93,10 +93,6 @@ function queueRouter(command, args, pinger, message) {
 		msg = msg + "!que-help to show commands";
 	}
 
-	else {
-		msg = "Can't recognize command. Please use !que-help for list of commands";
-	}
-
 	else if ( command === '-up' || command === 'ue-up' || command === 'down' || command === 'ue-down' ) {
 		if (!args.length) {
 			tag = pinger;
@@ -135,6 +131,11 @@ function queueRouter(command, args, pinger, message) {
 	
 	}
 
+	
+	else {
+		msg = "Can't recognize command. Please use !que-help for list of commands";
+	}
+
 
 	return msg;
 }
@@ -166,7 +167,6 @@ function move(arr, old_index, new_index) {
      arr.splice(new_index, 0, arr.splice(old_index, 1)[0]);  
    return arr;
 }
-
 // THIS  MUST  BE  THIS  WAY
 
 client.login(process.env.BOT_TOKEN);//BOT_TOKEN is the Client Secret
